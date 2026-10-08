@@ -1,0 +1,94 @@
+Vou colocar o que cada um deve fazer aqui
+
+LEVI > Banco de Dados e models
+
+ITALO > Controllers e API
+
+PEDRO > Frontend, EJS e CSS
+
+Levi as pastas que voce tem que trabalhar são:
+
+src/
+└── database/
+    ├── database.js
+    └── tables.sql
+
+database.db
+
+Será responsável por:
+
+Criar o banco SQLite
+Criar as tabelas
+Definir relacionamentos
+Inserir dados iniciais
+Fazer consultas SQL
+Criar funções para acessar o banco
+Preparar o que os controllers precisarão para trabalhar com o banco
+
+Italo as pastas que voce tem que trabalhar são:
+
+src/
+├── controllers/
+│   ├── product.controller.js
+│   ├── category.controller.js
+│   └── view.controller.js
+│
+├── routes/
+│   ├── api.routes.js
+│   ├── product.routes.js
+│   └── view.routes.js
+│
+└── middlewares/
+    ├── debug.middleware.js
+    └── notFound.middleware.js
+
+Será responsável por:
+
+Criar os endpoints da API
+Fazer GET
+Fazer POST
+Fazer PUT
+Fazer DELETE
+Conectar controllers ao banco criado pelo Levi
+Criar as rotas
+Criar middlewares
+Fazer os testes da API
+
+Pedro as pastas que voce tem que trabalhar são:
+
+src/
+└── views/
+    ├── layouts/
+    │   └── main.ejs
+    │
+    ├── pages/
+    │   ├── home.ejs
+    │   ├── products.ejs
+    │   └── product-form.ejs
+    │
+    └── partials/
+        ├── header.ejs
+        └── footer.ejs
+
+public/
+├── css/
+│   └── style.css
+│
+├── images/
+│
+└── scripts/
+    └── products.js
+
+Ordem:
+
+LEVI
+  ↓
+Banco de dados
+  ↓
+ITALO
+  ↓
+Controllers + API
+  ↓
+PEDRO
+  ↓
+Frontend + EJS
