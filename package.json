@@ -11,5 +11,18 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
-  }
+  },
+  "description": "",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PedroP-Eri/Geekstore-PIL.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PedroP-Eri/Geekstore-PIL/issues"
+  },
+  "homepage": "https://github.com/PedroP-Eri/Geekstore-PIL#readme"
 }
