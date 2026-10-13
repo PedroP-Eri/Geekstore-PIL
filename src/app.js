@@ -1,10 +1,10 @@
-import express from "express"
+import express from "express";
 
-const app = express 
+const app = express();
 
 //Permitir dados de Json
 
-app.use(express.json())
+app.use(express.json());
 
 //Permitir dados de formulário
 
@@ -17,7 +17,7 @@ app.use(express.static("public"));
 //Rota inicial
 
 app.get("/", (req, res) => {
-    res.send("Geek Store API funcionando")
+  res.send("Geek Store API funcionando");
 });
 
-export default app
+export default app;

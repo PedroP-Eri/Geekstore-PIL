@@ -2,6 +2,6 @@ import app from "./app.js";
 
 const PORT = 3000;
 
-app.listem(PORT, () => {
-    console.log(`Servidor rodando na porta http://localhost:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Servidor rodando na porta http://localhost:${PORT}`);
 });
