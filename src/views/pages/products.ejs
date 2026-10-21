@@ -1,1 +1,113 @@
-não escreva aqui
+<section class="page-heading">
+    <span class="eyebrow">CATÁLOGO GEEK</span>
+    <h1>Nossa loja</h1>
+    <p>Explore todos os produtos disponíveis.</p>
+</section>
+
+<div class="catalog-layout">
+    <aside class="filter-panel">
+        <h2>Categorias</h2>
+
+        <a class="filter-link" href="/products">Todas as categorias</a>
+
+        <% categories.forEach((category) => { %>
+            <a
+                class="filter-link"
+                href="/products?q=<%= encodeURIComponent(category.nome) %>"
+            >
+                <%= category.nome %>
+            </a>
+        <% }) %>
+    </aside>
+
+    <section class="catalog-content">
+        <div class="catalog-toolbar">
+            <p>
+                <% if (busca) { %>
+                    Resultados para: <strong><%= busca %></strong>
+                <% } else { %>
+                    Todos os produtos
+                <% } %>
+            </p>
+
+            <span class="result-count"><%= products.length %> produto(s)</span>
+        </div>
+
+        <% if (products.length === 0) { %>
+            <div class="empty-state">
+                <span class="empty-symbol">⌕</span>
+                <h2>Nenhum produto encontrado</h2>
+                <p>Tente outra busca ou consulte todas as categorias.</p>
+                <a href="/products" class="btn btn-primary">Ver todos</a>
+            </div>
+        <% } else { %>
+            <div class="product-grid">
+                <% products.forEach((product) => { %>
+                    <article class="product-card">
+                        <a class="product-image" href="/products/<%= product.id_produto %>">
+                            <img
+                                src="https://placehold.co/600x420/191927/FFFFFF?text=<%= encodeURIComponent(product.nome) %>"
+                                alt="<%= product.nome %>"
+                                loading="lazy"
+                            >
+                        </a>
+
+                        <div class="product-info">
+                            <span class="product-category"><%= product.categoria %></span>
+
+                            <h3>
+                                <a href="/products/<%= product.id_produto %>">
+                                    <%= product.nome %>
+                                </a>
+                            </h3>
+
+                            <p class="product-description">
+                                <%= product.descricao || "Produto especial para fãs do universo geek." %>
+                            </p>
+
+                            <span class="product-price">
+                                <%= Number(product.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %>
+                            </span>
+
+                            <p class="stock-info">
+                                <% if (product.estoque > 0) { %>
+                                    <span class="stock-dot"></span>
+                                    <%= product.estoque %> unidade(s) disponível(is)
+                                <% } else { %>
+                                    <span class="stock-dot stock-out"></span>
+                                    Indisponível
+                                <% } %>
+                            </p>
+
+                            <div class="product-actions">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary"
+                                    data-add-cart
+                                    data-id="<%= product.id_produto %>"
+                                    data-name="<%= product.nome %>"
+                                    data-price="<%= product.preco %>"
+                                    data-category="<%= product.categoria %>"
+                                    data-description="<%= product.descricao || '' %>"
+                                    <%= product.estoque <= 0 ? "disabled" : "" %>
+                                >Adicionar</button>
+
+                                <button
+                                    type="button"
+                                    class="icon-button favorite-button"
+                                    data-wishlist
+                                    data-id="<%= product.id_produto %>"
+                                    data-name="<%= product.nome %>"
+                                    data-price="<%= product.preco %>"
+                                    data-category="<%= product.categoria %>"
+                                    data-description="<%= product.descricao || '' %>"
+                                    aria-label="Adicionar aos favoritos"
+                                >♡</button>
+                            </div>
+                        </div>
+                    </article>
+                <% }) %>
+            </div>
+        <% } %>
+    </section>
+</div>

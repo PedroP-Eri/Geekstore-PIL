@@ -1,1 +1,35 @@
-não escreva aqui
+<header class="site-header">
+    <div class="header-top container">
+        <a class="brand" href="/">
+            <span class="brand-icon">✦</span>
+            <span>GEEK<span class="brand-accent">STORE</span></span>
+        </a>
+<form class="search-form" action="/products" method="get">
+    <input
+    type="search"
+    name="q"
+    placeholder="Buscar produtos peek"
+    aria-label="Buscar produtos"
+    value="<%= typeof busca !== 'undefined' ? busca : '' %>"
+    >
+
+    <button type="submit" aria-label="Pesquisar">⌕</button>
+</form>
+
+<a class="header-account" href="/account">
+    <span>♙</span>
+    <span>Minha conta</span>
+</a>
+    </div>
+
+    <nav class="main-nav">
+        <div class="container nav-links">
+            <a href="/">Home</a>
+            <a href="/products">Loja</a>
+            <a href="/cart">Carrinho</a>
+            <a href="/notifications">Notificações</a>
+            <a href="/wishlist">Lista de Desejos</a>
+            <a href="/account">Conta</a>
+        </div>
+    </nav>
+</header>

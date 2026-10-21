@@ -1,1 +1,105 @@
-não escreva aqui
+<section class="hero">
+    <div class="hero-content">
+        <span class="eyebrow">BEM-VINDO AO UNIVERSO GEEK</span>
+        <h1>Seu próximo item favorito está aqui.</h1>
+        <p>Encontre produtos, colecionáveis e acessórios do seu universo favorito.</p>
+        <a href="/products" class="btn btn-primary">Explorar loja</a>
+    </div>
+
+    <div class="hero-symbol" aria-hidden="true">✦</div>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">DESCUBRA</span>
+            <h2>Produtos em destaque</h2>
+        </div>
+
+        <div class="carousel-controls">
+            <button type="button" class="icon-button" data-scroll="-1" data-target="featured-products" aria-label="Produtos anteriores">←</button>
+            <button type="button" class="icon-button" data-scroll="1" data-target="featured-products" aria-label="Próximos produtos">→</button>
+        </div>
+    </div>
+
+    <% if (products.length === 0) { %>
+        <p class="empty-message">Nenhum produto cadastrado ainda.</p>
+    <% } else { %>
+        <div class="product-carousel" id="featured-products">
+            <% products.slice(0, 5).forEach((product) => { %>
+                <article class="product-card">
+                    <a class="product-image" href="/products/<%= product.id_produto %>">
+                        <img
+                            src="https://placehold.co/600x420/191927/FFFFFF?text=<%= encodeURIComponent(product.nome) %>"
+                            alt="<%= product.nome %>"
+                            loading="lazy"
+                        >
+                    </a>
+
+                    <div class="product-info">
+                        <span class="product-category"><%= product.categoria %></span>
+
+                        <h3>
+                            <a href="/products/<%= product.id_produto %>">
+                                <%= product.nome %>
+                            </a>
+                        </h3>
+
+                        <p class="product-description">
+                            <%= product.descricao || "Produto especial para fãs do universo geek." %>
+                        </p>
+
+                        <div class="product-bottom">
+                            <span class="product-price">
+                                <%= Number(product.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %>
+                            </span>
+<button 
+type="button"
+class="icon-button favorite-button"
+data-wishlist
+data-id="<%= product.id_produto %>"
+data-name="<%= product.nome %>"
+data-price="<%= product.preco %>"
+data-category="<%= product.categoria %>"
+data-description="<%= product.descricao || '' %>"
+>Adicionar ao carrinho</button>
+                        </div>
+</div>
+                </article>
+            <% }); %>
+        </div>
+    <% } %>
+</section>
+
+<section class="promotion-banner">
+    <div>
+        <span class="eyebrow">ESPECIAL PARA VOCÊ</span>
+        <h2>Mural de promoções</h2>
+        <p>Confira os produtos disponiveis e encontre seu próximo favorito.</p>
+    </div>
+    <a href="/products" class="btn btn-light">Ver Produtos</a>
+</section>
+
+<section class="section">
+    <div class="section-heading">
+        <div>
+            <span class="eyebrow">EXPLORE</span>
+            <h2>Explore por categoria</h2>            
+        </div>
+    </div>
+
+    <div class="category-grid">
+        <% categories.forEach((category) => { %>
+            <a
+                class="category-card"
+                href="/products?q=<%= encodeURIComponent(category.nome) %>"
+            >
+                <span class="category-symbol">✧</span>
+                <h3><%= category.nome %></h3>
+                <p><%= category.descricao || "Explore esta categoria" %></p>
+                <span class="category-arrow">Explorar →</span>
+            </a>
+        <% }) %>
+    </div>
+
+</section>

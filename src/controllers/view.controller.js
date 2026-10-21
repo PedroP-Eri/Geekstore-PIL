@@ -9,8 +9,9 @@ export const getHomePage = (req, res, next) => {
     const products = listarProdutos();
     const categories = listarCategorias();
 
-    return res.render("pages/home", {
+    res.render("layouts/main", {
       titulo: "GeekStore - Início",
+      pagina: "home",
       products,
       categories,
     });
@@ -21,13 +22,25 @@ export const getHomePage = (req, res, next) => {
 
 export const getProductsPage = (req, res, next) => {
   try {
-    const products = listarProdutos();
     const categories = listarCategorias();
+    const busca = String(req.query.q || "").trim().toLowerCase();
 
-    return res.render("pages/products", {
-      titulo: "GeekStore - Produtos",
+    let products = listarProdutos();
+
+    if (busca) {
+      products = products.filter((product) =>
+        `${product.nome} ${product.categoria} ${product.descricao || ""}`
+          .toLowerCase()
+          .includes(busca)
+      );
+    }
+
+    res.render("layouts/main", {
+      titulo: "GeekStore - Loja",
+      pagina: "products",
       products,
       categories,
+      busca,
     });
   } catch (error) {
     next(error);
@@ -48,13 +61,42 @@ export const getProductDetailsPage = (req, res, next) => {
       return res.status(404).send("Produto não encontrado.");
     }
 
-    return res.render("pages/product-form", {
+    res.render("layouts/main", {
       titulo: `GeekStore - ${product.nome}`,
+      pagina: "product-form",
       product,
-      produto: product,
       categories: listarCategorias(),
     });
   } catch (error) {
     next(error);
   }
+};
+
+// Páginas que não precisam consultar o banco para abrir.
+export const getCartPage = (req, res) => {
+  res.render("layouts/main", {
+    titulo: "GeekStore - Carrinho",
+    pagina: "cart",
+  });
+};
+
+export const getNotificationsPage = (req, res) => {
+  res.render("layouts/main", {
+    titulo: "GeekStore - Notificações",
+    pagina: "notifications",
+  });
+};
+
+export const getWishlistPage = (req, res) => {
+  res.render("layouts/main", {
+    titulo: "GeekStore - Lista de desejos",
+    pagina: "wishlist",
+  });
+};
+
+export const getAccountPage = (req, res) => {
+  res.render("layouts/main", {
+    titulo: "GeekStore - Conta",
+    pagina: "account",
+  });
 };

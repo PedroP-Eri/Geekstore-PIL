@@ -1,0 +1,51 @@
+<section class="page-heading">
+    <span class="eyebrow">SEUS PRODUTOS</span>
+    <h1>Meu carrinho</h1>
+    <p>Revise os produtos que você deseja comprar.</p>
+</section>
+
+<div class="two-column-layout">
+    <section class="panel">
+        <h2>Lista de produtos no carrinho</h2>
+
+        <div id="cart-items"></div>
+    </section>
+
+    <aside class="panel order-summary">
+        <h2>Resumo do pedido</h2>
+
+        <div class="summary-row">
+            <span>Quantidade de itens</span>
+            <strong id="cart-total-items">0</strong>
+        </div>
+
+        <div class="summary-row summary-total">
+            <span>Total</span>
+            <strong id="cart-total-price">R$ 0,00</strong>
+        </div>
+
+        <p class="muted-text">
+            Esta versão acadêmica não processa pagamentos.
+        </p>
+
+        <button
+            type="button"
+            class="btn btn-primary btn-full"
+            id="checkout-button"
+        >Finalizar pedido</button>
+
+        <a href="/products" class="btn btn-outline btn-full">
+            Continuar comprando
+        </a>
+    </aside>
+</div>
+
+<section class="section">
+    <div class="promotion-banner">
+        <div>
+            <h2>Continue explorando!</h2>
+            <p>Encontre outros produtos para adicionar ao seu carrinho.</p>
+        </div>
+        <a href="/products" class="btn btn-light">Ver produtos</a>
+    </div>
+</section>

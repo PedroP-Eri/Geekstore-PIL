@@ -1,1 +1,65 @@
-não escreva aqui
+<section class="breadcrumb">
+    <a href="/">Home</a>
+    <span> / </span>
+    <a href="/products">Loja</a>
+    <span> / </span>
+    <span><%= product.nome %></span>
+</section>
+
+<section class="detail-layout">
+    <div class="detail-image">
+        <img
+            src="https://placehold.co/800x700/191927/FFFFFF?text=<%= encodeURIComponent(product.nome) %>"
+            alt="<%= product.nome %>"
+        >
+    </div>
+
+    <div class="detail-info">
+        <span class="product-category"><%= product.categoria %></span>
+
+        <h1><%= product.nome %></h1>
+
+        <p class="detail-description">
+            <%= product.descricao || "Produto especial para fãs do universo geek." %>
+        </p>
+
+        <p class="detail-price">
+            <%= Number(product.preco).toLocaleString("pt-BR", { style: "currency", currency: "BRL" }) %>
+        </p>
+
+        <p class="stock-info">
+            Estoque: <strong><%= product.estoque %></strong> unidade(s)
+        </p>
+
+        <div class="detail-actions">
+            <button
+                type="button"
+                class="btn btn-primary"
+                data-add-cart
+                data-id="<%= product.id_produto %>"
+                data-name="<%= product.nome %>"
+                data-price="<%= product.preco %>"
+                data-category="<%= product.categoria %>"
+                data-description="<%= product.descricao || '' %>"
+                <%= product.estoque <= 0 ? "disabled" : "" %>
+            >Adicionar ao carrinho</button>
+
+            <button
+                type="button"
+                class="btn btn-outline"
+                data-wishlist
+                data-id="<%= product.id_produto %>"
+                data-name="<%= product.nome %>"
+                data-price="<%= product.preco %>"
+                data-category="<%= product.categoria %>"
+                data-description="<%= product.descricao || '' %>"
+            >♡ Favoritar</button>
+        </div>
+
+        <div class="detail-benefits">
+            <p>✦ Produtos do universo geek</p>
+            <p>✦ Consulte a disponibilidade antes de comprar</p>
+            <p>✦ Navegação simples e segura</p>
+        </div>
+    </div>
+</section>

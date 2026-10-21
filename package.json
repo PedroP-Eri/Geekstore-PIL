@@ -1,31 +1,27 @@
 {
   "name": "geekstore",
   "version": "1.0.0",
+  "description": "Loja virtual Geek Store desenvolvida com Node.js, Express, EJS e SQLite",
+  "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon src/server.js",
+    "dev": "node src/server.js",
     "start": "node src/server.js"
   },
+  "keywords": [
+    "geekstore",
+    "node",
+    "express",
+    "ejs",
+    "sqlite"
+  ],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "better-sqlite3": "^13.0.3",
-    "cors": "^2.8.6",
-    "dotenv": "^18.0.7",
+    "ejs": "^3.1.10",
     "express": "^5.3.0"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
-  },
-  "description": "",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PedroP-Eri/Geekstore-PIL.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/PedroP-Eri/Geekstore-PIL/issues"
-  },
-  "homepage": "https://github.com/PedroP-Eri/Geekstore-PIL#readme"
+    "nodemon": "^3.1.14"
+  }
 }

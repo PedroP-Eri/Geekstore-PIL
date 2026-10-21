@@ -1,1 +1,23 @@
-não escreva aqui
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#101018">
+    <title><%= titulo %></title>
+
+    <link rel="stylesheet" href="/public/css/style.css">
+    <script src="/public/scripts/products.js" defer></script>
+</head>
+<body>
+
+    <%- include("../partials/header.ejs") %>
+
+    <main class="container">
+        <%- include("../pages/" + pagina) %>
+    </main>
+
+    <%- include("../partials/footer") %>
+    
+</body>
+</html>
