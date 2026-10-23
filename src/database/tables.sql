@@ -93,6 +93,33 @@ CREATE TABLE IF NOT EXISTS avaliacao (
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
 );
 
+
+CREATE TABLE IF NOT EXISTS entrega (
+    id_entrega INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_venda INTEGER NOT NULL UNIQUE,
+    status_entrega TEXT NOT NULL DEFAULT 'Pendente',
+    codigo_rastreio TEXT UNIQUE,
+    endereco_destino TEXT NOT NULL,
+    data_envio TEXT,
+    data_entrega TEXT,
+    FOREIGN KEY (id_venda) REFERENCES venda(id_venda)
+);
+
+
+CREATE TABLE IF NOT EXISTS movimentacao_estoque (
+    id_movimentacao INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_produto INTEGER NOT NULL,
+    tipo_movimentacao TEXT NOT NULL
+        CHECK (tipo_movimentacao IN ('ENTRADA', 'SAIDA')),
+    quantidade INTEGER NOT NULL
+        CHECK (quantidade > 0),
+    motivo TEXT,
+    data_movimentacao TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
+);
+
+
+
 INSERT OR IGNORE INTO cliente (id_cliente, nome, nivel_fidelidade, desconto, telefone) VALUES
 (1, 'Pedro', 'Ouro', 10, '88999990001'),
 (2, 'Italo', 'Ouro', 10, '88999990002'),
@@ -159,3 +186,44 @@ INSERT OR IGNORE INTO avaliacao (id_avaliacao, id_cliente, id_produto, nota, com
 (2, 2, 3, 5, 'Produto muito bom', '2026-09-12'),
 (3, 3, 4, 4, 'Gostei bastante', '2026-09-13'),
 (4, 4, 5, 5, 'HQ muito boa', '2026-09-14');
+
+
+INSERT INTO entrega (
+    id_venda,
+    status_entrega,
+    codigo_rastreio,
+    endereco_destino,
+    data_envio
+) VALUES (
+    1,
+    'Enviado',
+    'BR123456789',
+    'Rua Central, 300 - Aracati, CE',
+    CURRENT_TIMESTAMP
+);
+
+
+INSERT INTO movimentacao_estoque (
+    id_produto,
+    tipo_movimentacao,
+    quantidade,
+    motivo
+) VALUES (
+    1,
+    'ENTRADA',
+    10,
+    'Reposição de mercadoria'
+);
+
+
+INSERT INTO movimentacao_estoque (
+    id_produto,
+    tipo_movimentacao,
+    quantidade,
+    motivo
+) VALUES (
+    1,
+    'SAIDA',
+    2,
+    'Baixa de estoque'
+);
