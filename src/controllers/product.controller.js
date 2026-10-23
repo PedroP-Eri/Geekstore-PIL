@@ -51,7 +51,14 @@ export const getProductById = (req, res, next) => {
 
 export const createProduct = (req, res, next) => {
   try {
-    const { nome, descricao, preco, estoque, id_categoria } = req.body;
+    const {
+      nome,
+      descricao,
+      preco,
+      estoque,
+      id_categoria,
+      imagem,
+    } = req.body;
 
     if (
       typeof nome !== "string" ||
@@ -64,12 +71,15 @@ export const createProduct = (req, res, next) => {
       (estoque !== undefined &&
         (!Number.isInteger(Number(estoque)) || Number(estoque) < 0)) ||
       !Number.isInteger(Number(id_categoria)) ||
-      Number(id_categoria) <= 0
+      Number(id_categoria) <= 0 ||
+      (imagem !== undefined &&
+        imagem !== null &&
+        typeof imagem !== "string")
     ) {
       return res.status(400).json({
         sucesso: false,
         mensagem:
-          "Informe nome, preço válido, estoque inteiro não negativo (se informado) e ID de categoria válido.",
+          "Informe nome, preço válido, estoque inteiro não negativo, categoria válida e um caminho de imagem válido.",
       });
     }
 
@@ -79,6 +89,7 @@ export const createProduct = (req, res, next) => {
       preco: Number(preco),
       estoque: estoque === undefined ? 0 : Number(estoque),
       id_categoria: Number(id_categoria),
+      imagem: imagem?.trim() || null,
     });
 
     const product = buscarProdutoPorId(resultado.id);
@@ -113,7 +124,14 @@ export const updateProduct = (req, res, next) => {
       });
     }
 
-    const { nome, descricao, preco, estoque, id_categoria } = req.body;
+    const {
+      nome,
+      descricao,
+      preco,
+      estoque,
+      id_categoria,
+      imagem,
+    } = req.body;
 
     if (
       typeof nome !== "string" ||
@@ -126,7 +144,10 @@ export const updateProduct = (req, res, next) => {
       !Number.isInteger(Number(estoque)) ||
       Number(estoque) < 0 ||
       !Number.isInteger(Number(id_categoria)) ||
-      Number(id_categoria) <= 0
+      Number(id_categoria) <= 0 ||
+      (imagem !== undefined &&
+        imagem !== null &&
+        typeof imagem !== "string")
     ) {
       return res.status(400).json({
         sucesso: false,
@@ -141,6 +162,10 @@ export const updateProduct = (req, res, next) => {
       preco: Number(preco),
       estoque: Number(estoque),
       id_categoria: Number(id_categoria),
+      imagem:
+        imagem === undefined
+          ? product.imagem
+          : imagem?.trim() || null,
     });
 
     return res.status(200).json({
@@ -183,4 +208,3 @@ export const deleteProduct = (req, res, next) => {
     next(error);
   }
 };
-;

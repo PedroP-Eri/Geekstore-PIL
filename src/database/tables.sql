@@ -48,6 +48,7 @@ CREATE TABLE IF NOT EXISTS produto (
     preco REAL NOT NULL,
     estoque INTEGER NOT NULL DEFAULT 0,
     id_categoria INTEGER NOT NULL,
+    imagem TEXT,
     FOREIGN KEY (id_categoria) REFERENCES categoria(id_categoria)
 );
 
@@ -92,8 +93,6 @@ CREATE TABLE IF NOT EXISTS avaliacao (
     FOREIGN KEY (id_produto) REFERENCES produto(id_produto)
 );
 
--- Dados iniciais fictícios. Os IDs explícitos e INSERT OR IGNORE evitam duplicar
--- os registros se este arquivo for executado novamente sobre o banco já preenchido.
 INSERT OR IGNORE INTO cliente (id_cliente, nome, nivel_fidelidade, desconto, telefone) VALUES
 (1, 'Pedro', 'Ouro', 10, '88999990001'),
 (2, 'Italo', 'Ouro', 10, '88999990002'),
@@ -101,7 +100,6 @@ INSERT OR IGNORE INTO cliente (id_cliente, nome, nivel_fidelidade, desconto, tel
 (4, 'João Pedro', 'Ouro', 10, '88999990004'),
 (5, 'Davi', 'Prata', 5, '88999990005');
 
--- Senhas de exemplo para atividade local. Em aplicação real, armazene hashes, nunca senhas puras.
 INSERT OR IGNORE INTO conta_cliente (id_conta, id_cliente, email, senha, data_criacao) VALUES
 (1, 1, 'pedro@gmail.com', 'senha123', '2026-09-01'),
 (2, 2, 'italo@gmail.com', 'senha456', '2026-09-02'),

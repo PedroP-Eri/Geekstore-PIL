@@ -12,10 +12,15 @@ const db = new Database(databasePath);
 db.pragma("foreign_keys = ON");
 db.pragma("journal_mode = WAL");
 
-// Cria as tabelas e insere dados de exemplo apenas quando ainda não existem.
 const schema = readFileSync(schemaPath, "utf8");
 db.exec(schema);
 
+// Adiciona a coluna imagem em bancos já existentes.
+const colunasProduto = db.prepare("PRAGMA table_info(produto)").all();
+
+if (!colunasProduto.some((coluna) => coluna.name === "imagem")) {
+  db.exec("ALTER TABLE produto ADD COLUMN imagem TEXT");
+}
 // Funções auxiliares reutilizadas pelas funções de cada entidade.
 function all(sql, params = {}) {
   return db.prepare(sql).all(params);
@@ -158,39 +163,98 @@ export const excluirCategoria = (id) =>
 
 // PRODUTOS
 export const listarProdutos = () =>
-  all(`SELECT p.*, c.nome AS categoria
-  FROM produto p JOIN categoria c ON c.id_categoria=p.id_categoria ORDER BY p.id_produto`);
+  all(`
+    SELECT p.*, c.nome AS categoria
+    FROM produto p
+    JOIN categoria c ON c.id_categoria = p.id_categoria
+    ORDER BY p.id_produto
+  `);
+
 export const buscarProdutoPorId = (id) =>
   get(
-    `SELECT p.*, c.nome AS categoria FROM produto p
-  JOIN categoria c ON c.id_categoria=p.id_categoria WHERE p.id_produto=@id`,
+    `
+      SELECT p.*, c.nome AS categoria
+      FROM produto p
+      JOIN categoria c ON c.id_categoria = p.id_categoria
+      WHERE p.id_produto = @id
+    `,
     { id },
   );
+
 export function criarProduto({
   nome,
   descricao = null,
   preco,
   estoque = 0,
   id_categoria,
+  imagem = null,
 }) {
   return run(
-    `INSERT INTO produto (nome, descricao, preco, estoque, id_categoria)
-              VALUES (@nome, @descricao, @preco, @estoque, @id_categoria)`,
-    { nome, descricao, preco, estoque, id_categoria },
+    `
+      INSERT INTO produto (
+        nome,
+        descricao,
+        preco,
+        estoque,
+        id_categoria,
+        imagem
+      )
+      VALUES (
+        @nome,
+        @descricao,
+        @preco,
+        @estoque,
+        @id_categoria,
+        @imagem
+      )
+    `,
+    {
+      nome,
+      descricao,
+      preco,
+      estoque,
+      id_categoria,
+      imagem,
+    },
   );
 }
+
 export function atualizarProduto(
   id,
-  { nome, descricao = null, preco, estoque, id_categoria },
+  {
+    nome,
+    descricao = null,
+    preco,
+    estoque,
+    id_categoria,
+    imagem = null,
+  },
 ) {
   return run(
-    `UPDATE produto SET nome=@nome, descricao=@descricao, preco=@preco,
-              estoque=@estoque, id_categoria=@id_categoria WHERE id_produto=@id`,
-    { id, nome, descricao, preco, estoque, id_categoria },
+    `
+      UPDATE produto
+      SET nome = @nome,
+          descricao = @descricao,
+          preco = @preco,
+          estoque = @estoque,
+          id_categoria = @id_categoria,
+          imagem = @imagem
+      WHERE id_produto = @id
+    `,
+    {
+      id,
+      nome,
+      descricao,
+      preco,
+      estoque,
+      id_categoria,
+      imagem,
+    },
   );
 }
+
 export const excluirProduto = (id) =>
-  run("DELETE FROM produto WHERE id_produto=@id", { id });
+  run("DELETE FROM produto WHERE id_produto = @id", { id });
 
 // VENDAS E ITENS
 export const listarVendas = () =>
