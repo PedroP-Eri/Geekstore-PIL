@@ -46,10 +46,10 @@
                         href="/products/<%= product.id_produto %>"
                     >
                         <img
-                            src="<%= product.imagem || '/images/products/sem-imagem.png' %>"
+                            src="<%= product.imagem || '/images/products/sem-imagem.svg' %>"
                             alt="<%= product.nome %>"
                             loading="lazy"
-                            onerror="this.onerror=null;this.src='/images/products/sem-imagem.png';"
+                            onerror="this.onerror=null;this.src='/images/products/sem-imagem.svg';"
                         >
                     </a>
 
@@ -85,6 +85,7 @@
                                 data-price="<%= product.preco %>"
                                 data-category="<%= product.categoria %>"
                                 data-description="<%= product.descricao || '' %>"
+                                data-image="<%= product.imagem || '' %>"
                             >Adicionar aos favoritos</button>
                         </div>
                     </div>

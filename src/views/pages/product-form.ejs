@@ -9,8 +9,9 @@
 <section class="detail-layout">
     <div class="detail-image">
         <img
-            src="https://placehold.co/800x700/191927/FFFFFF?text=<%= encodeURIComponent(product.nome) %>"
+            src="<%= product.imagem || '/images/products/sem-imagem.svg' %>"
             alt="<%= product.nome %>"
+            onerror="this.onerror=null;this.src='/images/products/sem-imagem.svg';"
         >
     </div>
 
@@ -41,6 +42,7 @@
                 data-price="<%= product.preco %>"
                 data-category="<%= product.categoria %>"
                 data-description="<%= product.descricao || '' %>"
+                data-image="<%= product.imagem || '' %>"
                 <%= product.estoque <= 0 ? "disabled" : "" %>
             >Adicionar ao carrinho</button>
 
@@ -53,6 +55,7 @@
                 data-price="<%= product.preco %>"
                 data-category="<%= product.categoria %>"
                 data-description="<%= product.descricao || '' %>"
+                data-image="<%= product.imagem || '' %>"
             >♡ Favoritar</button>
         </div>
 

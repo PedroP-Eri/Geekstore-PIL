@@ -37,7 +37,8 @@ function getProductFromButton(button) {
         nome: button.dataset.name,
         preco: Number(button.dataset.price),
         categoria: button.dataset.category || "",
-        descricao: button.dataset.description || ""
+        descricao: button.dataset.description || "",
+        imagem: button.dataset.image || ""
     };
 }
 
@@ -217,9 +218,10 @@ function renderWishlist() {
         <article class="product-card">
             <a class="product-image" href="/products/${item.id}">
                 <img
-                    src="https://placehold.co/600x420/191927/FFFFFF?text=${encodeURIComponent(item.nome)}"
+                    src="${escapeHTML(item.imagem || "/images/products/sem-imagem.svg")}"
                     alt="${escapeHTML(item.nome)}"
                     loading="lazy"
+                    onerror="this.onerror=null;this.src='/images/products/sem-imagem.svg';"
                 >
             </a>
 
@@ -247,6 +249,7 @@ function renderWishlist() {
                     data-price="${item.preco}"
                     data-category="${escapeHTML(item.categoria)}"
                     data-description="${escapeHTML(item.descricao)}"
+                    data-image="${escapeHTML(item.imagem || "")}"
                 >Adicionar ao carrinho</button>
 
                 <button
@@ -258,6 +261,7 @@ function renderWishlist() {
                     data-price="${item.preco}"
                     data-category="${escapeHTML(item.categoria)}"
                     data-description="${escapeHTML(item.descricao)}"
+                    data-image="${escapeHTML(item.imagem || "")}"
                 >Remover dos favoritos</button>
             </div>
         </article>

@@ -188,7 +188,7 @@ INSERT OR IGNORE INTO avaliacao (id_avaliacao, id_cliente, id_produto, nota, com
 (4, 4, 5, 5, 'HQ muito boa', '2026-09-14');
 
 
-INSERT INTO entrega (
+INSERT OR IGNORE INTO entrega (
     id_venda,
     status_entrega,
     codigo_rastreio,
@@ -208,11 +208,18 @@ INSERT INTO movimentacao_estoque (
     tipo_movimentacao,
     quantidade,
     motivo
-) VALUES (
+) SELECT
     1,
     'ENTRADA',
     10,
     'Reposição de mercadoria'
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM movimentacao_estoque
+    WHERE id_produto = 1
+      AND tipo_movimentacao = 'ENTRADA'
+      AND quantidade = 10
+      AND motivo = 'Reposição de mercadoria'
 );
 
 
@@ -221,9 +228,16 @@ INSERT INTO movimentacao_estoque (
     tipo_movimentacao,
     quantidade,
     motivo
-) VALUES (
+) SELECT
     1,
     'SAIDA',
     2,
     'Baixa de estoque'
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM movimentacao_estoque
+    WHERE id_produto = 1
+      AND tipo_movimentacao = 'SAIDA'
+      AND quantidade = 2
+      AND motivo = 'Baixa de estoque'
 );

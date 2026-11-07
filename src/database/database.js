@@ -21,6 +21,24 @@ const colunasProduto = db.prepare("PRAGMA table_info(produto)").all();
 if (!colunasProduto.some((coluna) => coluna.name === "imagem")) {
   db.exec("ALTER TABLE produto ADD COLUMN imagem TEXT");
 }
+
+const imagensProdutosIniciais = [
+  [1, "/images/products/camiseta_onepiece.png"],
+  [2, "/images/products/caneca_fireforce.png"],
+  [3, "/images/products/rarecardscolection_1999.png"],
+  [4, "/images/products/persona5_actionfigurejoker.png"],
+  [5, "/images/products/ultimacacada_decraven.png"],
+];
+const atualizarImagemProduto = db.prepare(
+  "UPDATE produto SET imagem = ? WHERE id_produto = ? AND (imagem IS NULL OR imagem = '')",
+);
+const atualizarImagensProdutosIniciais = db.transaction(() => {
+  for (const [id, imagem] of imagensProdutosIniciais) {
+    atualizarImagemProduto.run(imagem, id);
+  }
+});
+atualizarImagensProdutosIniciais();
+
 // Funções auxiliares reutilizadas pelas funções de cada entidade.
 function all(sql, params = {}) {
   return db.prepare(sql).all(params);
